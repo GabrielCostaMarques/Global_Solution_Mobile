@@ -13,8 +13,7 @@ const Home = ({ navigation }) => {
         <Text style={styles.titulo}>Seja Bem Vindo !</Text>
         <TypingAnimation
           style={styles.subtitulo}
-          text="Somos a ByteWizards. Aqui está uma prévia da ferramenta utilizando
-          ChatGPT"
+          text="Você que quer mudar de vida e se cuidar, experimente a nossa ferramenta utilizando IA"
         />
       </View>
 

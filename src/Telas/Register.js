@@ -64,7 +64,7 @@ const SignIn = ({ navigation }) => {
 
   return (
     <View style={style.body}>
-      <Text style={style.title}>Cadastre-se agora mesmo!</Text>
+      <Text style={style.title}>Cadastre-se!</Text>
 
       <TextInput
         style={style.input}
