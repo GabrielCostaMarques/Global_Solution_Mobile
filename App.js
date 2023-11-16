@@ -10,9 +10,9 @@ import { Contexto } from "./src/components/contexto";
 import HomeScreen from "./src/Telas/Intro";
 import RegisterScreen from "./src/Telas/Register";
 import LoginScreen from "./src/Telas/Login";
-import MenuScreen from "./src/Telas/MenuScreen";
 // Importe de telas
 import ChatScreen from "./src/Telas/Chat";
+import SaudeScreen from "./src/Telas/Saude";
 import Menu from "./src/Telas/MenuProfile";
 
 const Stack = createStackNavigator();
@@ -31,12 +31,12 @@ export default function App({ navigation }) {
       <View style={{ flex: 1 }}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            {/* <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Cadastrar" component={RegisterScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="‎" component={ChatScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} /> */}
+            <Stack.Screen name="Chat" component={ChatScreen} />
+            <Stack.Screen name="Saude" component={SaudeScreen} />
             <Stack.Screen name="Menu" component={Menu} />
-            {/* <Stack.Screen name="‎" component={MenuScreen} /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </View>

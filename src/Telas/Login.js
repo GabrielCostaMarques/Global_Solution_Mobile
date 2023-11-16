@@ -27,7 +27,7 @@ const Login = ({ navigation }) => {
       });
       contexto.id = resp.data.id;
       onSucess(`Login com Sucesso!`);
-      navigation.navigate("‎");
+      navigation.navigate("Chat");
     } catch (error) {
       onError(error.response.data ?? `Falha no login. Verifique suas credenciais!!`);
       console.log(JSON.stringify(error.message));

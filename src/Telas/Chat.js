@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, FlatList, DrawerLayoutAndroid 
 import { respostaApiGPT } from "../components/apiGPT";
 import Menu from "../Telas/MenuProfile";
 
-const App = () => {
+const App = ({navigation}) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const drawerRef = React.createRef();
@@ -29,6 +29,9 @@ const App = () => {
   const openDrawer = () => {
     drawerRef.current.openDrawer();
   };
+  const goToSaude = () => {
+    navigation.navigate("Saude");
+  };
 
   return (
     <DrawerLayoutAndroid
@@ -43,9 +46,14 @@ const App = () => {
       )}
     >
       <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 ,flexDirection:"row",justifyContent:"space-between"}}>
         <TouchableOpacity onPress={openDrawer}>
           <Text style={{ fontSize: 24, padding: 16 }}>☰ Menu</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={goToSaude}>
+          <Text style={{ fontSize: 24, padding: 16 }}>🧑‍⚕️ Saúde</Text>
+        </TouchableOpacity>
+        </View>
 
         <FlatList
           data={messages}
