@@ -1,4 +1,4 @@
-import * as React from "react";
+import React,{ useState }  from 'react';
 import {
     SafeAreaView,
     View,
@@ -6,15 +6,38 @@ import {
     StyleSheet,
     Text,
     StatusBar,
+    Image,
+    TouchableOpacity
   } from 'react-native';
 
-function Saude() {
+
+  import PopModal from './Popup'
+  import IconAdd from '../../assets/iconadd.png'
+
+
+function Saude({navigation}) {
+  const [modalVisible , setModalVisible]=useState(false)
+
+  const toggleModal= ()=>{setModalVisible(!modalVisible)}
+
   return (
       <SafeAreaView style={styles.container}>
-        <FlatList
+        <View style={styles.iconadd}>
+          <TouchableOpacity onPress={toggleModal}>
+            <Image source={IconAdd} style={styles.iconaddImg}/>
+          </TouchableOpacity>
+          <PopModal aberto = {modalVisible} fechado = {toggleModal}/>
+        </View>
+        <View style={styles.blocoCampanha}>
+            <Text style={styles.tituloBlocoCampanha}>Janeiro: Branco</Text>
+            <Text style={styles.textoBlocoCampanha}>Campanha: global de conscientização sobre a Saúde Mental</Text>
+        </View>
+
+        <FlatList 
           data={DATA}
           renderItem={({ item }) => <Item item={item} />}
           keyExtractor={(item) => item.id}
+          style={{flex:90}}
         />
       </SafeAreaView>
   );
@@ -73,9 +96,43 @@ const Item = ({ item }) => (
 );
 
 const styles = StyleSheet.create({
+
+
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+  },
+
+  iconadd:{
+    justifyContent:"center",
+    alignItems:"flex-end",
+    padding:10
+  },
+  iconaddImg:{
+    width:40,
+    height:40,
+  },
+
+  blocoCampanha:{
+    margin:20,
+    backgroundColor:"white",
+    padding:12,
+    borderRadius:15,
+    justifyContent:"center",
+    alignItems:"center",
+  },
+
+  tituloBlocoCampanha:{
+    fontSize:24,
+    textTransform:"uppercase",
+    fontWeight:"bold",
+    textAlign:"center",
+
+  },
+  textoBlocoCampanha:{
+    textAlign:"center",
+    fontSize:15
+
   },
   item: {
     backgroundColor: "#9fec23",
