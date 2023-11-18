@@ -1,45 +1,45 @@
-import React,{ useState }  from 'react';
+import React, { useState } from 'react';
 import {
-    SafeAreaView,
-    View,
-    FlatList,
-    StyleSheet,
-    Text,
-    StatusBar,
-    Image,
-    TouchableOpacity
-  } from 'react-native';
+  SafeAreaView,
+  View,
+  FlatList,
+  StyleSheet,
+  Text,
+  StatusBar,
+  Image,
+  TouchableOpacity
+} from 'react-native';
 
 
-  import PopModal from './Popup'
-  import IconAdd from '../../assets/iconadd.png'
+import PopModal from './Popup'
+import IconAdd from '../../assets/iconadd.png'
 
 
-function Saude({navigation}) {
-  const [modalVisible , setModalVisible]=useState(false)
+function Saude() {
+  const [modalVisible, setModalVisible] = useState(false)
 
-  const toggleModal= ()=>{setModalVisible(!modalVisible)}
+  const toggleModal = () => { setModalVisible(!modalVisible) }
 
   return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.iconadd}>
-          <TouchableOpacity onPress={toggleModal}>
-            <Image source={IconAdd} style={styles.iconaddImg}/>
-          </TouchableOpacity>
-          <PopModal aberto = {modalVisible} fechado = {toggleModal}/>
-        </View>
-        <View style={styles.blocoCampanha}>
-            <Text style={styles.tituloBlocoCampanha}>Janeiro: Branco</Text>
-            <Text style={styles.textoBlocoCampanha}>Campanha: global de conscientização sobre a Saúde Mental</Text>
-        </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.iconadd}>
+        <TouchableOpacity onPress={toggleModal}>
+          <Image source={IconAdd} style={styles.iconaddImg} />
+        </TouchableOpacity>
+        <PopModal aberto={modalVisible} fechado={toggleModal} />
+      </View>
+      <View style={styles.blocoCampanha}>
+        <Text style={styles.tituloBlocoCampanha}>Janeiro: Branco</Text>
+        <Text style={styles.textoBlocoCampanha}>Campanha: global de conscientização sobre a Saúde Mental</Text>
+      </View>
 
-        <FlatList 
-          data={DATA}
-          renderItem={({ item }) => <Item item={item} />}
-          keyExtractor={(item) => item.id}
-          style={{flex:90}}
-        />
-      </SafeAreaView>
+      <FlatList
+        data={DATA}
+        renderItem={({ item }) => <Item item={item} />}
+        keyExtractor={(item) => item.id}
+        style={{ flex: 90 }}
+      />
+    </SafeAreaView>
   );
 }
 
@@ -47,7 +47,7 @@ const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "Outubro Rosa - Câncer de mama",
-    orientacoes:`Cuidados e orientações:
+    orientacoes: `Cuidados e orientações:
     - O principal cuidado é a realização de exames de rastreamento.\n
     - A mamografia é o exame mais eficaz para a detecção precoce do câncer de mama.
 
@@ -103,35 +103,35 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
 
-  iconadd:{
-    justifyContent:"center",
-    alignItems:"flex-end",
-    padding:10
+  iconadd: {
+    justifyContent: "center",
+    alignItems: "flex-end",
+    padding: 10
   },
-  iconaddImg:{
-    width:40,
-    height:40,
-  },
-
-  blocoCampanha:{
-    margin:20,
-    backgroundColor:"white",
-    padding:12,
-    borderRadius:15,
-    justifyContent:"center",
-    alignItems:"center",
+  iconaddImg: {
+    width: 40,
+    height: 40,
   },
 
-  tituloBlocoCampanha:{
-    fontSize:24,
-    textTransform:"uppercase",
-    fontWeight:"bold",
-    textAlign:"center",
+  blocoCampanha: {
+    margin: 20,
+    backgroundColor: "white",
+    padding: 12,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  tituloBlocoCampanha: {
+    fontSize: 24,
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    textAlign: "center",
 
   },
-  textoBlocoCampanha:{
-    textAlign:"center",
-    fontSize:15
+  textoBlocoCampanha: {
+    textAlign: "center",
+    fontSize: 15
 
   },
   item: {
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight:"bold"
+    fontWeight: "bold"
   },
   paragrafo: {
     fontSize: 16,
