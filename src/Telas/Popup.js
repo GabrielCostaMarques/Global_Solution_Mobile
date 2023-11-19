@@ -3,9 +3,46 @@ import { View, Text, TouchableOpacity, TextInput, Button, StyleSheet, Image } fr
 import Modal from 'react-native-modal';
 
 import IconFechar from '../../assets/iconRemove.png'
+import axios from 'axios';
 
+
+const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 
 const PopModal = ({ aberto, fechado }) => {
+    const [nomeSaude, setNomeSaude]=useState("")
+    const [idadeSaude, setIdadeSaude]=useState(null)
+    const [pesoSaude, setPesoSaude]=useState(null)
+    const [tempoSono, setTempoSono]=useState("")
+    const [lista , setLista]=useState([{}])
+
+    const objSaude={nomeSaude,idadeSaude,pesoSaude,tempoSono}
+
+    const cadastrarInfo =()=>{
+        apiForms
+        .post("/dadosSaude.json",objSaude)
+        .then(()=>{
+            alert("Dados Lidos")
+            fechado
+            carregarInfo()
+        }).catch((err)=>{alert("Erro ao cadastrar"+err)})
+    }
+
+    const carregarInfo = () => {
+        apiForms.get("/dadosSaude.json")
+    
+          .then((resposta) => {
+            const listaNova = []
+            for (const chave in resposta.data) {
+              const obj = resposta.data[chave]
+              obj.id = chave;
+              listaNova.push(obj)
+            }
+            setLista(listaNova)
+          })
+          .catch((err) => { alert("Erro ao ler a lista" + err) })
+      };
+    
+
     return (
         <Modal
             visible={aberto}
@@ -22,11 +59,11 @@ const PopModal = ({ aberto, fechado }) => {
                 
                 <View style={styles.container}>
                     <Text style={styles.titleForms}>Formulário de Saúde</Text>
-                    <TextInput style={styles.inputForms} placeholder='Nome' />
-                    <TextInput style={styles.inputForms} placeholder='Idade' />
-                    <TextInput style={styles.inputForms} placeholder='Peso' />
-                    <TextInput style={styles.inputForms} placeholder='Tempo de Sono' />
-                    <TouchableOpacity style={styles.buttonForms} onPress={fechado}>
+                    <TextInput style={styles.inputForms} placeholder='Nome' value={nomeSaude} onChangeText={setNomeSaude}/>
+                    <TextInput style={styles.inputForms} placeholder='Idade' value={idadeSaude} onChangeText={setIdadeSaude}/>
+                    <TextInput style={styles.inputForms} placeholder='Peso' value={pesoSaude} onChangeText={setPesoSaude}/>
+                    <TextInput style={styles.inputForms} placeholder='Tempo de Sono' value={tempoSono} onChangeText={setTempoSono}/>
+                    <TouchableOpacity style={styles.buttonForms} onPress={cadastrarInfo}>
                         <Text style={styles.titleButtonForms}>Concluir</Text>
                     </TouchableOpacity>
                 </View>
