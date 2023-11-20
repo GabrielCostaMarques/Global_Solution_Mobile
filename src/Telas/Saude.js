@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -13,21 +13,45 @@ import {
 
 import PopModal from './Popup'
 import IconAdd from '../../assets/iconadd.png'
+import axios from 'axios';
+
+const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 
 
 function Saude() {
+
+  useEffect(()=>{
+    carregarInfo
+  },[])
   const [modalVisible, setModalVisible] = useState(false)
+
+  const [lista, setLista]=useState([{}])
   
-
   const toggleModal = () => { setModalVisible(!modalVisible) }
-
+  
+  const carregarInfo = () => {
+    apiForms.get("/dadosSaude.json")
+    
+    .then((resposta) => {
+      const listaNova = []
+      for (const chave in resposta.data) {
+        const obj = resposta.data[chave]
+        obj.id = chave;
+        listaNova.push(obj)
+      }
+      setLista(listaNova)
+      console.log(lista);
+    })
+    .catch((err) => { alert("Erro ao ler a lista" + err) })
+  };
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.iconadd}>
         <TouchableOpacity onPress={toggleModal}>
           <Image source={IconAdd} style={styles.iconaddImg} />
         </TouchableOpacity>
-        <PopModal aberto={modalVisible} fechado={toggleModal} />
+        <PopModal aberto={modalVisible} fechado={toggleModal}/>
       </View>
       <View style={styles.blocoCampanha}>
         <Text style={styles.tituloBlocoCampanha}>Janeiro: Branco</Text>
@@ -35,64 +59,25 @@ function Saude() {
       </View>
 
       <FlatList
-        data={DATA}
+        data={lista}
         renderItem={({ item }) => <Item item={item} />}
         keyExtractor={(item) => item.id}
         style={{ flex: 90 }}
-      />
+        />
     </SafeAreaView>
   );
 }
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "Outubro Rosa - Câncer de mama",
-    orientacoes: `Cuidados e orientações:
-    - O principal cuidado é a realização de exames de rastreamento.\n
-    - A mamografia é o exame mais eficaz para a detecção precoce do câncer de mama.
-
-Faixas etárias:
-   - Mulheres a partir dos 40 anos devem realizar exames de rastreamento anualmente.
-
-Médicos:
-    - Os médicos indicados para realizar os exames de rastreamento são o ginecologista e o mastologista.
-    `,
-    mes: "Outubro",
-    imc: "25",
-    idade: "41",
-    peso: "81",
-    sono: "7h",
-  },
-  {
-    id: "3ac68afc-c1b1-46c2-aed5",
-    title: "teste",
-    mes: "teste",
-    imc: "teste",
-    idade: "teste",
-    peso: "teste",
-    sono: "teste",
-  },
-  {
-    id: "3ad53abb28ba-c1b1-46c2-aed5-2",
-    title: "teste",
-    mes: "teste",
-    imc: "teste",
-    idade: "teste",
-    peso: "teste",
-    sono: "teste",
-  },
-];
-
 const Item = ({ item }) => (
+  
   <View style={styles.item}>
-    <Text style={styles.title}>Campanha:{item.title}</Text>
-    {/* <Text style={styles.title}>Mês:{item.mes}</Text> */}
-    <Text style={styles.paragrafo}>IMC:{item.imc}</Text>
+    {/* <Text style={styles.title}>Campanha:{item.title}</Text>
+     <Text style={styles.title}>Mês:{item.mes}</Text>
+    <Text style={styles.paragrafo}>IMC:{item.imc}</Text> */}
     <Text style={styles.paragrafo}>idade:{item.idade}</Text>
     <Text style={styles.paragrafo}>peso:{item.peso}</Text>
     <Text style={styles.paragrafo}>tempo de sono:{item.sono}</Text>
-    <Text style={styles.paragrafo}>orientacoes:{item.orientacoes}</Text>
+    {/* <Text style={styles.paragrafo}>orientacoes:{item.orientacoes}</Text> */}
   </View>
 );
 

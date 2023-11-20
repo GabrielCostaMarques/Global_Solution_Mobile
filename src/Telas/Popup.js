@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Button, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native';
 import Modal from 'react-native-modal';
 
 import IconFechar from '../../assets/iconRemove.png'
 import axios from 'axios';
-
+import {carregarInfo} from './Saude'
 
 const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 
@@ -13,7 +13,7 @@ const PopModal = ({ aberto, fechado }) => {
     const [idadeSaude, setIdadeSaude]=useState(null)
     const [pesoSaude, setPesoSaude]=useState(null)
     const [tempoSono, setTempoSono]=useState("")
-    const [lista , setLista]=useState([{}])
+    
 
     const objSaude={nomeSaude,idadeSaude,pesoSaude,tempoSono}
 
@@ -21,27 +21,10 @@ const PopModal = ({ aberto, fechado }) => {
         apiForms
         .post("/dadosSaude.json",objSaude)
         .then(()=>{
-            alert("Dados Lidos")
-            fechado
-            carregarInfo()
+            cadastrarInfo()
+            fechado()
         }).catch((err)=>{alert("Erro ao cadastrar"+err)})
-    }
-
-    const carregarInfo = () => {
-        apiForms.get("/dadosSaude.json")
-    
-          .then((resposta) => {
-            const listaNova = []
-            for (const chave in resposta.data) {
-              const obj = resposta.data[chave]
-              obj.id = chave;
-              listaNova.push(obj)
-            }
-            setLista(listaNova)
-          })
-          .catch((err) => { alert("Erro ao ler a lista" + err) })
-      };
-    
+    }    
 
     return (
         <Modal
