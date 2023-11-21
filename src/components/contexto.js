@@ -6,6 +6,9 @@ cadastrar:(obj)=>{},
 remover:(id)=>{},
 listar:()=>{},
 salvar:(obj)=>{},
+cadastrarInfo:()=>{},
+carregarInfo:()=>{},
+listaSaude:[],
 lista:[],
 
 

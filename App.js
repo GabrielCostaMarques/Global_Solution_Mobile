@@ -14,18 +14,24 @@ import LoginScreen from "./src/Telas/Login";
 import ChatScreen from "./src/Telas/Chat";
 import SaudeScreen from "./src/Telas/Saude";
 import Menu from "./src/Telas/MenuProfile";
+import PopModal from './src/Telas/Popup';
 
 const Stack = createStackNavigator();
 
 export default function App({ navigation }) {
   const [lista, setLista] = useState([]);
   const [id, setId] = useState(0);
+  const [listaSaude, setListaSaude] = useState([]);
+  const [idSaude, setIdSaude] = useState(0);
+
 
   return (
     <Contexto.Provider
       value={{
         lista,
         id,
+        listaSaude,
+        idSaude
       }}
     >
       <View style={{ flex: 1 }}>
@@ -35,7 +41,8 @@ export default function App({ navigation }) {
             <Stack.Screen name="Cadastrar" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} /> 
     <Stack.Screen name="Chat" component={ChatScreen} />*/}
-            <Stack.Screen name="Saude" component={SaudeScreen} />
+            <Stack.Screen name="Saude" component={SaudeScreen}/>
+            <Stack.Screen name="Popup" component={PopModal}/>
             <Stack.Screen name="Menu" component={Menu} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native';
 import Modal from 'react-native-modal';
 
 import IconFechar from '../../assets/iconRemove.png'
 import axios from 'axios';
-import {carregarInfo} from './Saude'
 
 const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 
-const PopModal = ({ aberto, fechado }) => {
+const PopModal = ({ aberto, fechado, atualizaLista }) => {
     const [nomeSaude, setNomeSaude]=useState("")
     const [idadeSaude, setIdadeSaude]=useState(null)
     const [pesoSaude, setPesoSaude]=useState(null)
@@ -21,10 +20,11 @@ const PopModal = ({ aberto, fechado }) => {
         apiForms
         .post("/dadosSaude.json",objSaude)
         .then(()=>{
-            cadastrarInfo()
+            atualizaLista()
             fechado()
         }).catch((err)=>{alert("Erro ao cadastrar"+err)})
-    }    
+    }
+
 
     return (
         <Modal

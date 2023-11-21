@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -14,44 +14,72 @@ import {
 import PopModal from './Popup'
 import IconAdd from '../../assets/iconadd.png'
 import axios from 'axios';
+import { AntDesign } from '@expo/vector-icons';
 
-const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 
+
+
+const apiformsSaude = axios.create({ baseURL: "https://globalteste-5ed37-default-rtdb.firebaseio.com" })
 
 function Saude() {
 
-  useEffect(()=>{
-    carregarInfo
-  },[])
   const [modalVisible, setModalVisible] = useState(false)
 
-  const [lista, setLista]=useState([{}])
-  
+  const [id, setId]=useState(null)
+  const [lista, setLista] = useState([])
+
+
   const toggleModal = () => { setModalVisible(!modalVisible) }
-  
-  const carregarInfo = () => {
-    apiForms.get("/dadosSaude.json")
-    
-    .then((resposta) => {
-      const listaNova = []
-      for (const chave in resposta.data) {
-        const obj = resposta.data[chave]
-        obj.id = chave;
-        listaNova.push(obj)
-      }
-      setLista(listaNova)
-      console.log(lista);
-    })
-    .catch((err) => { alert("Erro ao ler a lista" + err) })
+
+  const getUserSaude = () => {
+    apiformsSaude.get("/dadosSaude.json")
+
+      .then((resposta) => {
+        const listaNova = [];
+        for (const chave in resposta.data) {
+          const obj = {...resposta.data[chave], id:chave};
+          obj.id = chave;
+          listaNova.push(obj);
+        }
+        setLista(listaNova);
+      })
+
+      .catch((err) => { alert("Erro ao ler a lista" + err) })
   };
-  
+
+  const atualizaLista = () => {
+    getUserSaude()
+  }
+  const editarDados = () => {
+    setEditData(lista);
+    setEditing(true);
+  };
+
+
+  const apagar = (obj) => { 
+    apiformsSaude.delete("/dadosSaude/" + obj.id + ".json")
+    .then(()=>{
+      atualizaLista();
+    })
+    .catch(()=>{
+      alert("Erro ao apagar dado")
+    })
+  }
+
+  useEffect(() => {
+    getUserSaude()
+  }, [])
+
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.iconadd}>
         <TouchableOpacity onPress={toggleModal}>
           <Image source={IconAdd} style={styles.iconaddImg} />
         </TouchableOpacity>
-        <PopModal aberto={modalVisible} fechado={toggleModal}/>
+        <PopModal aberto={modalVisible} fechado={toggleModal} atualizaLista={atualizaLista} />
       </View>
       <View style={styles.blocoCampanha}>
         <Text style={styles.tituloBlocoCampanha}>Janeiro: Branco</Text>
@@ -60,25 +88,41 @@ function Saude() {
 
       <FlatList
         data={lista}
-        renderItem={({ item }) => <Item item={item} />}
+        renderItem={({ item }) => <Item item={item} apagarItem={apagar} atualizaLista={atualizaLista} editarItem={editarDados}/>}
         keyExtractor={(item) => item.id}
         style={{ flex: 90 }}
-        />
+      />
     </SafeAreaView>
   );
 }
 
-const Item = ({ item }) => (
-  
-  <View style={styles.item}>
-    {/* <Text style={styles.title}>Campanha:{item.title}</Text>
+const Item = ( {item , apagarItem, editarItem ,atualizaLista} ) => (
+  <View>
+    <View style={styles.item}>
+
+      {/* <Text style={styles.title}>Campanha:{item.title}</Text>
      <Text style={styles.title}>Mês:{item.mes}</Text>
     <Text style={styles.paragrafo}>IMC:{item.imc}</Text> */}
-    <Text style={styles.paragrafo}>idade:{item.idade}</Text>
-    <Text style={styles.paragrafo}>peso:{item.peso}</Text>
-    <Text style={styles.paragrafo}>tempo de sono:{item.sono}</Text>
-    {/* <Text style={styles.paragrafo}>orientacoes:{item.orientacoes}</Text> */}
+      <Text style={styles.paragrafo}>Nome:{item.nomeSaude}</Text>
+      <Text style={styles.paragrafo}>idade:{item.idadeSaude}</Text>
+      <Text style={styles.paragrafo}>peso:{item.pesoSaude}</Text>
+      <Text style={styles.paragrafo}>tempo de sono:{item.tempoSono}</Text>
+      {/* <Text style={styles.paragrafo}>orientacoes:{item.orientacoes}</Text> */}
+
+      <View style={styles.iconsModel}>
+        <AntDesign  name='delete' size={40} onPress={() => {
+           apagarItem(item)
+           atualizaLista() 
+        }} />
+        <AntDesign  name='edit' size={40} onPress={() => {
+           editarItem(item)
+           atualizaLista() }} />
+      </View>
+
+
+    </View>
   </View>
+
 );
 
 const styles = StyleSheet.create({
@@ -121,7 +165,8 @@ const styles = StyleSheet.create({
 
   },
   item: {
-    backgroundColor: "#9fec23",
+    backgroundColor: "#a8a8e5",
+    elevation: 8,
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -134,6 +179,15 @@ const styles = StyleSheet.create({
   paragrafo: {
     fontSize: 16,
   },
+
+  iconsModel: {
+    
+    position: 'absolute',
+    right:0,
+    height:"100%"
+    
+
+  }
 });
 
 export default Saude;
