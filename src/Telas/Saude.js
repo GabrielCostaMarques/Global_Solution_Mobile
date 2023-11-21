@@ -113,8 +113,8 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
   return (
 
     <View>
-      <View style={styles.item}>
 
+      <View style={styles.item}>
         {editar?(
           <View style={{flex:1, height:"100%"}}>
           <TextInput
