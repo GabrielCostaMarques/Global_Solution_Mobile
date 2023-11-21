@@ -7,7 +7,8 @@ import {
   Text,
   StatusBar,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 
 
@@ -25,7 +26,7 @@ function Saude() {
 
   const [modalVisible, setModalVisible] = useState(false)
 
-  const [id, setId]=useState(null)
+  const [id, setId] = useState(null)
   const [lista, setLista] = useState([])
 
 
@@ -37,7 +38,7 @@ function Saude() {
       .then((resposta) => {
         const listaNova = [];
         for (const chave in resposta.data) {
-          const obj = {...resposta.data[chave], id:chave};
+          const obj = { ...resposta.data[chave], id: chave };
           obj.id = chave;
           listaNova.push(obj);
         }
@@ -50,20 +51,21 @@ function Saude() {
   const atualizaLista = () => {
     getUserSaude()
   }
-  const editarDados = () => {
-    setEditData(lista);
-    setEditing(true);
+  const editarDados = (item, novosDados) => {
+    apiformsSaude.put(`/dadosSaude/${item.id}.json`,novosDados)
+    .then(()=>{alert("Dados dditados com sucesso!")    })
+    .catch((err)=>{alert("Erro ao editar os dados",err)})
   };
 
 
-  const apagar = (obj) => { 
+  const apagar = (obj) => {
     apiformsSaude.delete("/dadosSaude/" + obj.id + ".json")
-    .then(()=>{
-      atualizaLista();
-    })
-    .catch(()=>{
-      alert("Erro ao apagar dado")
-    })
+      .then(() => {
+        atualizaLista();
+      })
+      .catch(() => {
+        alert("Erro ao apagar dado")
+      })
   }
 
   useEffect(() => {
@@ -88,7 +90,7 @@ function Saude() {
 
       <FlatList
         data={lista}
-        renderItem={({ item }) => <Item item={item} apagarItem={apagar} atualizaLista={atualizaLista} editarItem={editarDados}/>}
+        renderItem={({ item }) => <Item item={item} apagarItem={apagar} atualizaLista={atualizaLista} editarItem={editarDados} />}
         keyExtractor={(item) => item.id}
         style={{ flex: 90 }}
       />
@@ -96,34 +98,82 @@ function Saude() {
   );
 }
 
-const Item = ( {item , apagarItem, editarItem ,atualizaLista} ) => (
-  <View>
-    <View style={styles.item}>
+const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
+  const [editar, setEditar]=useState(false);
+  const [novosDados, setNovosDados]=useState({})
+  
+  const handleEdicao=()=>{setEditar(!editar)}
+  
+  const handleSalvarEdicao=()=>{
+    editarItem(item, novosDados);
+    setEditar(false);
+    atualizaLista();
+  };
 
-      {/* <Text style={styles.title}>Campanha:{item.title}</Text>
-     <Text style={styles.title}>Mês:{item.mes}</Text>
-    <Text style={styles.paragrafo}>IMC:{item.imc}</Text> */}
-      <Text style={styles.paragrafo}>Nome:{item.nomeSaude}</Text>
-      <Text style={styles.paragrafo}>idade:{item.idadeSaude}</Text>
-      <Text style={styles.paragrafo}>peso:{item.pesoSaude}</Text>
-      <Text style={styles.paragrafo}>tempo de sono:{item.tempoSono}</Text>
-      {/* <Text style={styles.paragrafo}>orientacoes:{item.orientacoes}</Text> */}
+  return (
 
-      <View style={styles.iconsModel}>
-        <AntDesign  name='delete' size={40} onPress={() => {
-           apagarItem(item)
-           atualizaLista() 
-        }} />
-        <AntDesign  name='edit' size={40} onPress={() => {
-           editarItem(item)
-           atualizaLista() }} />
+    <View>
+      <View style={styles.item}>
+
+        {editar?(
+          <View style={{flex:1, height:"100%"}}>
+          <TextInput
+              style={styles.inputEdicao}
+              placeholder={`Nome: ${item.nomeSaude}`}
+              onChangeText={(text) =>
+                setNovosDados({ ...novosDados, nomeSaude: text })
+              }
+            />
+            <TextInput
+              style={styles.inputEdicao}
+              placeholder={`Idade: ${item.idadeSaude}`}
+              onChangeText={(text) =>
+                setNovosDados({ ...novosDados, idadeSaude: text })
+              }
+            />
+            <TextInput
+              style={styles.inputEdicao}
+              placeholder={`Peso: ${item.pesoSaude}`}
+              onChangeText={(text) =>
+                setNovosDados({ ...novosDados, pesoSaude: text })
+              }
+            />
+            <TextInput
+              style={styles.inputEdicao}
+              placeholder={`Tempo de Sono: ${item.tempoSono}`}
+              onChangeText={(text) =>
+                setNovosDados({ ...novosDados, tempoSono: text })
+              }
+            />
+            <TouchableOpacity onPress={handleSalvarEdicao}>
+              <Text>Salvar</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <>
+            <Text style={styles.paragrafo}>Nome: {item.nomeSaude}</Text>
+            <Text style={styles.paragrafo}>Idade: {item.idadeSaude}</Text>
+            <Text style={styles.paragrafo}>Peso: {item.pesoSaude}</Text>
+            <Text style={styles.paragrafo}>Tempo de Sono: {item.tempoSono}</Text>
+            <TouchableOpacity onPress={handleEdicao}>
+              <AntDesign name='edit' size={40} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                apagarItem(item);
+                atualizaLista();
+              }}
+            >
+              <AntDesign name='delete' size={40} />
+            </TouchableOpacity>
+          </>
+        )}
       </View>
-
-
     </View>
-  </View>
+  )
 
-);
+
+};
 
 const styles = StyleSheet.create({
 
@@ -181,11 +231,11 @@ const styles = StyleSheet.create({
   },
 
   iconsModel: {
-    
+
     position: 'absolute',
-    right:0,
-    height:"100%"
-    
+    right: 0,
+    height: "100%"
+
 
   }
 });
