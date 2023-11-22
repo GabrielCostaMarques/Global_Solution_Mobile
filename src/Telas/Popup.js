@@ -15,9 +15,10 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
     const [habitosSaude, setHabitos]=useState("")
     const [alimentacaoSaude, setAlimentacao]=useState("")
     const [tempoSono, setTempoSono]=useState("")
+    const [imc, setImc]=useState(null)
     
 
-    const objSaude={nomeSaude,idadeSaude,pesoSaude,alturaSaude,habitosSaude,alimentacaoSaude,tempoSono}
+    const objSaude={nomeSaude,idadeSaude,pesoSaude,alturaSaude,habitosSaude,alimentacaoSaude,tempoSono,imc}
 
     const cadastrarInfo =()=>{
         apiForms
@@ -25,9 +26,16 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
         .then(()=>{
             atualizaLista()
             fechado()
+            calcularIMC()
         }).catch((err)=>{alert("Erro ao cadastrar"+err)})
     }
 
+    const calcularIMC=()=> {
+        const alturaMetros = alturaSaude / 100;
+        const imcTotal = pesoSaude / (alturaMetros * alturaMetros);
+        setImc(imcTotal.toFixed(1));
+        console.log(imcTotal.toFixed(2));
+      }
 
     return (
         <Modal

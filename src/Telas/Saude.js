@@ -108,9 +108,11 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
     atualizaLista();
   };
 
+
+
   return (
 
-    <View style={{flex:1}}>
+    <View style={{ flex: 1 }}>
 
       <View style={styles.item}>
         {editar ? (
@@ -169,20 +171,21 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={{flex:1}}>
-            <View style={{backgroundColor:"#fff",position:"absolute", bottom:225,left:80, borderRadius:20,padding:15}}><Text style={styles.paragrafo}>Nome: {item.nomeSaude}</Text></View>
-            
+          <View style={{ flex: 1 }}>
+            <View style={styles.tagNome}><Text style={styles.paragrafoNome}>{item.nomeSaude}</Text></View>
+
             <Text style={styles.paragrafo}>Idade: {item.idadeSaude}</Text>
             <Text style={styles.paragrafo}>Peso: {item.pesoSaude}</Text>
             <Text style={styles.paragrafo}>Altura: {item.alturaSaude}</Text>
             <Text style={styles.paragrafo}>Hábitos: {item.habitosSaude}</Text>
             <Text style={styles.paragrafo}>Alimentação: {item.alimentacaoSaude}</Text>
             <Text style={styles.paragrafo}>Tempo de Sono: {item.tempoSono}</Text>
+            <Text style={styles.paragrafoIMC}>IMC: {item.imc}</Text>
             <TouchableOpacity style={styles.iconEdita} onPress={handleEdicao}>
               <AntDesign name='edit' size={40} />
             </TouchableOpacity>
             <TouchableOpacity
-            style={styles.iconLixeira}
+              style={styles.iconLixeira}
               onPress={() => {
                 apagarItem(item);
                 atualizaLista();
@@ -190,6 +193,10 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             >
               <AntDesign name='delete' size={40} />
             </TouchableOpacity>
+              <View>
+                <Text>Orientações: {}</Text>
+              </View>
+
           </View>
         )}
       </View>
@@ -204,7 +211,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor:"#ebebeb"
+    backgroundColor: "#ebebeb"
   },
 
   iconadd: {
@@ -215,11 +222,12 @@ const styles = StyleSheet.create({
   iconaddImg: {
     width: 40,
     height: 40,
+    
   },
 
   blocoCampanha: {
     margin: 20,
-    marginBottom:50,
+    marginBottom: 50,
     backgroundColor: "white",
     padding: 12,
     borderRadius: 15,
@@ -243,33 +251,64 @@ const styles = StyleSheet.create({
     backgroundColor: "#a8a8e5",
     elevation: 8,
     padding: 20,
-    paddingTop:30,
+    paddingTop: 30,
     marginVertical: 40,
     marginHorizontal: 16,
     borderRadius: 10,
+
+  },
+
+  tagNome: {
+    backgroundColor: "#fff",
+    bottom: 65,
+    borderRadius: 20,
+    paddingVertical: 5,
+    textAlign: "center",
+
     
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    
+
   },
   paragrafo: {
+    fontSize: 17,
+    padding: 5
+  },
+  paragrafoNome: {
+    fontSize: 25,
+    padding: 5,
+    textAlign: "center",
+    textTransform:"capitalize",
+  },
+  paragrafoIMC: {
     fontSize: 20,
-    padding:5
+    textAlign: "center",
+    textTransform:"uppercase",
+    fontWeight:"bold",
+    padding:20
   },
 
   iconLixeira: {
-    position:"absolute",
-    right:0,
-    top:0,
-    margin:5
+    position: "absolute",
+    right: 0,
+    top: 20,
+    margin: 0,
+    backgroundColor:"#fff",
+    borderRadius:100,
+    padding:7,
+    elevation: 10,
   },
   iconEdita: {
-    position:"absolute",
-    right:0,
-    bottom:0,
-    margin:5
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    margin: 0,
+    backgroundColor:"#fff",
+    borderRadius:100,
+    padding:7,
+    elevation: 10,
   }
 });
 
