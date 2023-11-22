@@ -24,13 +24,11 @@ const apiformsSaude = axios.create({ baseURL: "https://globalteste-5ed37-default
 
 function Saude() {
 
+  const toggleModal = () => { setModalVisible(!modalVisible) }
   const [modalVisible, setModalVisible] = useState(false)
-
-  const [id, setId] = useState(null)
   const [lista, setLista] = useState([])
 
 
-  const toggleModal = () => { setModalVisible(!modalVisible) }
 
   const getUserSaude = () => {
     apiformsSaude.get("/dadosSaude.json")
@@ -52,9 +50,9 @@ function Saude() {
     getUserSaude()
   }
   const editarDados = (item, novosDados) => {
-    apiformsSaude.put(`/dadosSaude/${item.id}.json`,novosDados)
-    .then(()=>{alert("Dados dditados com sucesso!")    })
-    .catch((err)=>{alert("Erro ao editar os dados",err)})
+    apiformsSaude.put(`/dadosSaude/${item.id}.json`, novosDados)
+      .then(() => { alert("Dados dditados com sucesso!") })
+      .catch((err) => { alert("Erro ao editar os dados", err) })
   };
 
 
@@ -76,7 +74,7 @@ function Saude() {
 
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.iconadd}>
         <TouchableOpacity onPress={toggleModal}>
           <Image source={IconAdd} style={styles.iconaddImg} />
@@ -94,17 +92,17 @@ function Saude() {
         keyExtractor={(item) => item.id}
         style={{ flex: 90 }}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
-  const [editar, setEditar]=useState(false);
-  const [novosDados, setNovosDados]=useState({})
-  
-  const handleEdicao=()=>{setEditar(!editar)}
-  
-  const handleSalvarEdicao=()=>{
+  const [editar, setEditar] = useState(false);
+  const [novosDados, setNovosDados] = useState({})
+
+  const handleEdicao = () => { setEditar(!editar) }
+
+  const handleSalvarEdicao = () => {
     editarItem(item, novosDados);
     setEditar(false);
     atualizaLista();
@@ -112,12 +110,12 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
 
   return (
 
-    <View>
+    <View style={{flex:1}}>
 
       <View style={styles.item}>
-        {editar?(
-          <View style={{flex:1, height:"100%"}}>
-          <TextInput
+        {editar ? (
+          <View style={{ flex: 1, height: "100%" }}>
+            <TextInput
               style={styles.inputEdicao}
               placeholder={`Nome: ${item.nomeSaude}`}
               onChangeText={(text) =>
@@ -140,6 +138,27 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             />
             <TextInput
               style={styles.inputEdicao}
+              placeholder={`Altura: ${item.alturaSaude}`}
+              onChangeText={(text) =>
+                setNovosDados({ ...novosDados, alturaSaude: text })
+              }
+            />
+            <TextInput
+              style={styles.inputEdicao}
+              placeholder={`Hábitos: ${item.habitosSaude}`}
+              onChangeText={(text) =>
+                setNovosDados({ ...novosDados, habitosSaude: text })
+              }
+            />
+            <TextInput
+              style={styles.inputEdicao}
+              placeholder={`Alimentação: ${item.alimentacaoSaude}`}
+              onChangeText={(text) =>
+                setNovosDados({ ...novosDados, alimentacaoSaude: text })
+              }
+            />
+            <TextInput
+              style={styles.inputEdicao}
               placeholder={`Tempo de Sono: ${item.tempoSono}`}
               onChangeText={(text) =>
                 setNovosDados({ ...novosDados, tempoSono: text })
@@ -150,15 +169,20 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             </TouchableOpacity>
           </View>
         ) : (
-          <>
-            <Text style={styles.paragrafo}>Nome: {item.nomeSaude}</Text>
+          <View style={{flex:1}}>
+            <View style={{backgroundColor:"#fff",position:"absolute", bottom:225,left:80, borderRadius:20,padding:15}}><Text style={styles.paragrafo}>Nome: {item.nomeSaude}</Text></View>
+            
             <Text style={styles.paragrafo}>Idade: {item.idadeSaude}</Text>
             <Text style={styles.paragrafo}>Peso: {item.pesoSaude}</Text>
+            <Text style={styles.paragrafo}>Altura: {item.alturaSaude}</Text>
+            <Text style={styles.paragrafo}>Hábitos: {item.habitosSaude}</Text>
+            <Text style={styles.paragrafo}>Alimentação: {item.alimentacaoSaude}</Text>
             <Text style={styles.paragrafo}>Tempo de Sono: {item.tempoSono}</Text>
-            <TouchableOpacity onPress={handleEdicao}>
+            <TouchableOpacity style={styles.iconEdita} onPress={handleEdicao}>
               <AntDesign name='edit' size={40} />
             </TouchableOpacity>
             <TouchableOpacity
+            style={styles.iconLixeira}
               onPress={() => {
                 apagarItem(item);
                 atualizaLista();
@@ -166,7 +190,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             >
               <AntDesign name='delete' size={40} />
             </TouchableOpacity>
-          </>
+          </View>
         )}
       </View>
     </View>
@@ -180,7 +204,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    backgroundColor:"#ebebeb"
   },
 
   iconadd: {
@@ -195,6 +219,7 @@ const styles = StyleSheet.create({
 
   blocoCampanha: {
     margin: 20,
+    marginBottom:50,
     backgroundColor: "white",
     padding: 12,
     borderRadius: 15,
@@ -218,25 +243,33 @@ const styles = StyleSheet.create({
     backgroundColor: "#a8a8e5",
     elevation: 8,
     padding: 20,
-    marginVertical: 8,
+    paddingTop:30,
+    marginVertical: 40,
     marginHorizontal: 16,
     borderRadius: 10,
+    
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    
   },
   paragrafo: {
-    fontSize: 16,
+    fontSize: 20,
+    padding:5
   },
 
-  iconsModel: {
-
-    position: 'absolute',
-    right: 0,
-    height: "100%"
-
-
+  iconLixeira: {
+    position:"absolute",
+    right:0,
+    top:0,
+    margin:5
+  },
+  iconEdita: {
+    position:"absolute",
+    right:0,
+    bottom:0,
+    margin:5
   }
 });
 

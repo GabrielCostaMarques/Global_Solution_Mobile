@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 
 import IconFechar from '../../assets/iconRemove.png'
@@ -11,10 +11,13 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
     const [nomeSaude, setNomeSaude]=useState("")
     const [idadeSaude, setIdadeSaude]=useState(null)
     const [pesoSaude, setPesoSaude]=useState(null)
+    const [alturaSaude, setAltura]=useState("")
+    const [habitosSaude, setHabitos]=useState("")
+    const [alimentacaoSaude, setAlimentacao]=useState("")
     const [tempoSono, setTempoSono]=useState("")
     
 
-    const objSaude={nomeSaude,idadeSaude,pesoSaude,tempoSono}
+    const objSaude={nomeSaude,idadeSaude,pesoSaude,alturaSaude,habitosSaude,alimentacaoSaude,tempoSono}
 
     const cadastrarInfo =()=>{
         apiForms
@@ -35,22 +38,26 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
             animationType="slide"
 
         >
-            <View style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }}>
                     <TouchableOpacity style={styles.iconFechar} onPress={fechado}>
                     <Image source={IconFechar}  />
                     </TouchableOpacity>
                 
                 <View style={styles.container}>
                     <Text style={styles.titleForms}>Formulário de Saúde</Text>
+                    <Text style={styles.subtitleForms}>Preencha com suas informações</Text>
                     <TextInput style={styles.inputForms} placeholder='Nome' value={nomeSaude} onChangeText={setNomeSaude}/>
                     <TextInput style={styles.inputForms} placeholder='Idade' value={idadeSaude} onChangeText={setIdadeSaude}/>
                     <TextInput style={styles.inputForms} placeholder='Peso' value={pesoSaude} onChangeText={setPesoSaude}/>
-                    <TextInput style={styles.inputForms} placeholder='Tempo de Sono' value={tempoSono} onChangeText={setTempoSono}/>
+                    <TextInput style={styles.inputForms} placeholder='Altura' value={alturaSaude} onChangeText={setAltura}/>
+                    <TextInput style={styles.inputForms} placeholder='Hábitos - descreva no máximo 3' value={habitosSaude} onChangeText={setHabitos}/>
+                    <TextInput style={styles.inputForms} placeholder='Alimentação - descreva no máximo 3' value={alimentacaoSaude} onChangeText={setAlimentacao}/>
+                    <TextInput style={styles.inputForms} placeholder='Tempo de Sono - apenas número' value={tempoSono} onChangeText={setTempoSono}/>
                     <TouchableOpacity style={styles.buttonForms} onPress={cadastrarInfo}>
                         <Text style={styles.titleButtonForms}>Concluir</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ScrollView>
 
         </Modal>
     )
@@ -59,6 +66,7 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
 const styles = StyleSheet.create({
 
     container: {
+        paddingTop:50,
         flex: 1,
         backgroundColor: "#c5c9d1",
 
@@ -81,6 +89,12 @@ const styles = StyleSheet.create({
     titleForms: {
         fontSize: 24,
         fontWeight: "bold",
+        textTransform: "uppercase",
+        position: "relative",
+        bottom: 40,
+    },
+    subtitleForms: {
+        fontSize: 14,
         textTransform: "uppercase",
         position: "relative",
         bottom: 40,
