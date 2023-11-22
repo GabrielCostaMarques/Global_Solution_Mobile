@@ -5,6 +5,8 @@ import Modal from 'react-native-modal';
 import IconFechar from '../../assets/iconRemove.png'
 import axios from 'axios';
 
+import { respostaApiGPTSaude } from '../components/apiGPT';
+
 const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 
 const PopModal = ({ aberto, fechado, atualizaLista }) => {
@@ -16,9 +18,19 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
     const [alimentacaoSaude, setAlimentacao]=useState("")
     const [tempoSono, setTempoSono]=useState("")
     const [imc, setImc]=useState(null)
+    const [orientacoes, setOrientacoes]=useState("")
     
 
-    const objSaude={nomeSaude,idadeSaude,pesoSaude,alturaSaude,habitosSaude,alimentacaoSaude,tempoSono,imc}
+    const objSaude={
+        nomeSaude,
+        idadeSaude,
+        pesoSaude,
+        alturaSaude,
+        habitosSaude,
+        alimentacaoSaude,
+        tempoSono,
+        imc,
+        }
 
     const cadastrarInfo =()=>{
         apiForms
@@ -36,6 +48,22 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
         setImc(imcTotal.toFixed(1));
         console.log(imcTotal.toFixed(2));
       }
+
+    const orientacoesSaude= async()=>{
+        const userMessage = {text: objSaude};
+        setOrientacoes([...orientacoes,userMessage])
+
+        try{
+            const respostaSaude = await respostaApiGPTSaude(objSaude);
+
+            if (respostaSaude) {
+                const botResponse = {text: respostaSaude};
+                setOrientacoes(botResponse);
+              }
+        }catch{
+            alert("Erro na Comnucação")
+        }
+    }
 
     return (
         <Modal

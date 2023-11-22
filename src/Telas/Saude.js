@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
   Text,
-  StatusBar,
   Image,
   TouchableOpacity,
   TextInput
 } from 'react-native';
 
-import { respostaApiGPT } from '../components/apiGPT';
+
 
 
 import PopModal from './Popup'
@@ -31,7 +29,6 @@ function Saude() {
   const [lista, setLista] = useState([])
 
 
-  const botMessage =  respostaApiGPT(lista);
 
   const getUserSaude = () => {
     apiformsSaude.get("/dadosSaude.json")
@@ -44,6 +41,7 @@ function Saude() {
           listaNova.push(obj);
         }
         setLista(listaNova);
+          console.log(lista);
       })
 
       .catch((err) => { alert("Erro ao ler a lista" + err) })
@@ -91,7 +89,13 @@ function Saude() {
 
       <FlatList
         data={lista}
-        renderItem={({ item }) => <Item item={item} apagarItem={apagar} atualizaLista={atualizaLista} editarItem={editarDados} />}
+        renderItem={({ item }) => 
+        
+        <Item item={item} 
+        apagarItem={apagar} 
+        atualizaLista={atualizaLista} 
+        editarItem={editarDados} />}
+
         keyExtractor={(item) => item.id}
         style={{ flex: 90 }}
       />
@@ -197,7 +201,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               <AntDesign name='delete' size={40} />
             </TouchableOpacity>
               <View>
-                <Text>Orientações: {item.text}</Text>
+                <Text>Orientações: {item.orientacoes}</Text>
               </View>
 
           </View>
