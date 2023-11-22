@@ -11,6 +11,8 @@ import {
   TextInput
 } from 'react-native';
 
+import { respostaApiGPT } from '../components/apiGPT';
+
 
 import PopModal from './Popup'
 import IconAdd from '../../assets/iconadd.png'
@@ -29,6 +31,7 @@ function Saude() {
   const [lista, setLista] = useState([])
 
 
+  const botMessage =  respostaApiGPT(lista);
 
   const getUserSaude = () => {
     apiformsSaude.get("/dadosSaude.json")
@@ -194,7 +197,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               <AntDesign name='delete' size={40} />
             </TouchableOpacity>
               <View>
-                <Text>Orientações: {}</Text>
+                <Text>Orientações: {item.text}</Text>
               </View>
 
           </View>
