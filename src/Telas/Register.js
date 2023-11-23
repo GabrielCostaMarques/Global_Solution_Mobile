@@ -98,7 +98,7 @@ const SignIn = ({ navigation }) => {
           <Text style={style.btnText}>Cadastre-se</Text>
         </View>
       </TouchableOpacity>
-      <Text>{"\n"}</Text>
+      
       <TouchableOpacity
         onPress={() => navigation.navigate("Login")}
         style={{ marginVertical: 20 }}
@@ -119,17 +119,19 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ee5e5e5",
+    backgroundColor: "#F5F8FF",
     padding: 20,
   },
 
   title:{
+    textAlign:"center",
     color:"black",
     fontSize:30,
     fontWeight:"bold"
   },
 
   input: {
+    textAlign:"center",
     backgroundColor: "#fff",
     borderRadius: 10,
     margin: 5,
@@ -137,15 +139,6 @@ const style = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     color: "black",
-  },
-
-  titleInput: {
-    fontSize: 20,
-    fontWeight: "bold",
-    letterSpacing: 2,
-    color: "black",
-    marginTop: 20,
-    marginBottom: 20,
   },
 
   msgErro:{
@@ -157,7 +150,7 @@ const style = StyleSheet.create({
   btnCadastrar: {
     fontWeight: "bold" ,
     fontSize: 20,
-    backgroundColor: "#ef4023",
+    backgroundColor: "#4876FF",
     position: "relative",
     top: 60,
     paddingHorizontal: 40,

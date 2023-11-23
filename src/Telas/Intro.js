@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 
-import IconHome from "../../assets/IconHomeAnimation1.gif";
+import IconHome from "../../assets/IconHomeIA.png";
 import Arrow from "../../assets/arrow.png";
 import TypingAnimation from "../components/AnimationText";
 
@@ -10,11 +10,10 @@ const Home = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.containerHome}>
         <Image style={styles.logo} source={IconHome} />
-        <Text style={styles.titulo}>Seja Bem Vindo !</Text>
+        <Text style={styles.titulo}>Bem Vindo ao NutrIA</Text>
         <TypingAnimation
           style={styles.subtitulo}
-          text="Somos a ByteWizards. Aqui está uma prévia da ferramenta utilizando
-          ChatGPT"
+          text="Sua saúde merece cuidado"
         />
       </View>
 
@@ -27,7 +26,6 @@ const Home = ({ navigation }) => {
         >
           <View style={styles.buttonContent}>
             <Text style={styles.btnNext}>Próximo</Text>
-            <Image source={Arrow} style={styles.arrowImage} />
           </View>
         </TouchableOpacity>
       </View>
@@ -41,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#e5e5e5",
+    backgroundColor: "#F5F8FF",
     overflow: "hidden",
   },
 
@@ -49,17 +47,20 @@ const styles = StyleSheet.create({
     flex: 8,
     alignItems: "center",
     justifyContent: "center",
+    padding:30,
+    textAlign:"center"
   },
 
   logo: {
     marginBottom: 30,
-    width: 360,
-    height: 360,
+    width: 230,
+    height: 260,
   },
   titulo: {
     fontSize: 40,
     fontWeight: "bold",
     marginBottom: 20,
+    textAlign:"center"
   },
   subtitulo: {
     fontSize: 20,
@@ -70,14 +71,15 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#ef4023",
-    borderRadius: 10,
+    backgroundColor: "#4876FF",
+    borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 25,
     marginTop: 30,
   },
   btnNext: {
     fontSize: 22,
+    textTransform:"uppercase",
     fontWeight: "bold",
     textAlign: "center",
     lineHeight: 25,

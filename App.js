@@ -31,10 +31,10 @@ export default function App({ navigation }) {
       <View style={{ flex: 1 }}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            {/* <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Cadastrar" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="‎" component={ChatScreen} />
+            <Stack.Screen name="‎" component={ChatScreen} /> */}
             <Stack.Screen name="Menu" component={Menu} />
             {/* <Stack.Screen name="‎" component={MenuScreen} /> */}
           </Stack.Navigator>

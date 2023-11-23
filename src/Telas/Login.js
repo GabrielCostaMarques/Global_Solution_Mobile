@@ -31,6 +31,7 @@ const Login = ({ navigation }) => {
     } catch (error) {
       onError(error.response.data ?? `Falha no login. Verifique suas credenciais!!`);
       console.log(JSON.stringify(error.message));
+      console.log(resp.data);
     }
   };
 
@@ -80,6 +81,7 @@ const Login = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             handleLogin();
+            
           }}
         >
           <View style={style.btnLogin}>
@@ -121,18 +123,20 @@ export default Login;
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ef4023",
+    backgroundColor: "#4876FF",
     justifyContent: "center",
     alignItems: "center",
   },
 
   title: {
+    textAlign:"center",
     fontSize: 35,
     fontWeight: "bold",
     color: "white",
   },
 
   titleInput: {
+    textAlign:"center",
     fontSize: 20,
     fontWeight: "bold",
     letterSpacing: 2,
@@ -141,6 +145,7 @@ const style = StyleSheet.create({
   },
 
   input: {
+    textAlign:"center",
     backgroundColor: "#fff",
     borderRadius: 10,
     margin: 5,
@@ -153,7 +158,7 @@ const style = StyleSheet.create({
 
   btnLogin: {
     fontSize: 30,
-    backgroundColor: "#ef4023",
+    backgroundColor: "#4876FF",
     position: "relative",
     top: 60,
     paddingHorizontal: 40,
@@ -168,6 +173,7 @@ const style = StyleSheet.create({
   },
 
   esqueceuSenhaText: {
+    textAlign:"center",
     textDecorationStyle: "solid",
     textDecorationLine: "underline",
     marginVertical: 10,
