@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList,  } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, FlatList, DrawerLayoutAndroid } from "react-native";
 import { respostaApiGPT } from "../components/apiGPT";
 import Menu from "../Telas/MenuProfile";
 
