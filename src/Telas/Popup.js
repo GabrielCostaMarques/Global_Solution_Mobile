@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import IconFechar from '../../assets/iconRemove.png'
 import axios from 'axios';
 
-import { respostaApiGPTSaude } from '../components/apiGPT';
+import { respostaApiGPTSaude } from '../fetcher/apiGPT';
 
 const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 

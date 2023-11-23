@@ -16,8 +16,8 @@ import PopModal from './Popup'
 import IconAdd from '../../assets/iconadd.png'
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
-import { onSucess, onError } from "./../components/Toast";
-import { api, API_URL } from "../api";
+import { onSucess, onError } from "../models/Toast";
+import { api, API_URL } from "../fetcher/api";
 
 
 const apiformsSaude = axios.create({ baseURL: "https://globalteste-5ed37-default-rtdb.firebaseio.com" })
@@ -69,7 +69,7 @@ function Saude() {
   }
   const editarDados = (item, novosDados) => {
     apiformsSaude.put(`/dadosSaude/${item.id}.json`, novosDados)
-      .then(() => { alert("Dados dditados com sucesso!") })
+      .then(() => { alert("Dados editados com sucesso!") })
       .catch((err) => { alert("Erro ao editar os dados", err) })
   };
 
