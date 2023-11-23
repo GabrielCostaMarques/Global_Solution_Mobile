@@ -16,8 +16,8 @@ import PopModal from './Popup'
 import IconAdd from '../../assets/iconadd.png'
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
-
-
+import { onSucess, onError } from "./../components/Toast";
+import { api, API_URL } from "../api";
 
 
 const apiformsSaude = axios.create({ baseURL: "https://globalteste-5ed37-default-rtdb.firebaseio.com" })
@@ -28,6 +28,23 @@ function Saude() {
   const [modalVisible, setModalVisible] = useState(false)
   const [lista, setLista] = useState([])
 
+  const [campanha, setCampanha] = useState({
+    titulo: "",
+    descricao: "",
+    dtInfoSaude: "",
+  });
+
+  const camapanhaSaudeAtual = () => {
+    try {
+      api.get(`${API_URL}atualizacoes-saude-pub`).then((resp) => {
+        onSucess(`Campanha atual carregada!`);
+        setCampanha(...resp.data)
+      });
+    } catch (error) {
+      onError(`Falha ao carregar os dados`);
+      // console.log(error);
+    }
+  }
 
 
   const getUserSaude = () => {
@@ -68,6 +85,7 @@ function Saude() {
   }
 
   useEffect(() => {
+    camapanhaSaudeAtual()
     getUserSaude()
   }, [])
 
@@ -83,8 +101,9 @@ function Saude() {
         <PopModal aberto={modalVisible} fechado={toggleModal} atualizaLista={atualizaLista} />
       </View>
       <View style={styles.blocoCampanha}>
-        <Text style={styles.tituloBlocoCampanha}>Janeiro: Branco</Text>
-        <Text style={styles.textoBlocoCampanha}>Campanha: global de conscientização sobre a Saúde Mental</Text>
+        <Text style={styles.tituloBlocoCampanha}>{campanha.titulo}</Text>
+        <Text style={styles.textoBlocoCampanha}>{campanha.descricao}</Text>
+        <Text style={styles.textoBlocoCampanha}>Data Inicio Campanha: {campanha.dtInfoSaude}</Text>
       </View>
 
       <FlatList
