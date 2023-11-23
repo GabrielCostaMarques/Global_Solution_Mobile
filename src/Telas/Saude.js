@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "#ebebeb"
+    backgroundColor: "#ee5e5e5"
   },
 
   iconadd: {
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
 
   },
   item: {
-    backgroundColor: "#a8a8e5",
+    backgroundColor: "#ef4023",
     elevation: 8,
     padding: 20,
     paddingTop: 30,

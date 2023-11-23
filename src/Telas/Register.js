@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
-import { api, API_URL } from "../api";
-import { onSucess, onError } from "../components/Toast";
+import { api, API_URL } from "../fetcher/api";
+import { onSucess, onError } from "../models/Toast";
 import {object,string} from "yup"
 
 const SignIn = ({ navigation }) => {

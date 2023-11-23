@@ -10,8 +10,8 @@ import {
   StyleSheet,
 } from "react-native";
 import { Contexto } from "../components/contexto";
-import { api, API_URL } from "../api";
-import { onSucess, onError } from "../components/Toast";
+import { api, API_URL } from "../fetcher/api";
+import { onSucess, onError } from "../models/Toast";
 import { useNavigation } from '@react-navigation/native';
 
 const UserProfile = () => {

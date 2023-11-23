@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 
 import IconHome from "../../assets/IconHomeAnimation1.gif";
 import Arrow from "../../assets/arrow.png";
-import TypingAnimation from "../components/AnimationText";
+import TypingAnimation from "../Telas/componentesView/AnimationText";
 
 const Home = ({ navigation }) => {
   return (

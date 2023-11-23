@@ -5,6 +5,8 @@ import Modal from 'react-native-modal';
 import IconFechar from '../../assets/iconRemove.png'
 import axios from 'axios';
 
+import { api, API_URL } from "../fetcher/api";
+
 import { respostaApiGPTSaude } from '../fetcher/apiGPT';
 
 const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
@@ -49,21 +51,21 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
         console.log(imcTotal.toFixed(2));
       }
 
-    const orientacoesSaude= async()=>{
-        const userMessage = {text: objSaude};
-        setOrientacoes([...orientacoes,userMessage])
+    // const orientacoesSaude= async()=>{
+    //     const userMessage = {text: objSaude};
+    //     setOrientacoes([...orientacoes,userMessage])
 
-        try{
-            const respostaSaude = await respostaApiGPTSaude(objSaude);
+    //     try{
+    //         const respostaSaude = await respostaApiGPTSaude(objSaude);
 
-            if (respostaSaude) {
-                const botResponse = {text: respostaSaude};
-                setOrientacoes(botResponse);
-              }
-        }catch{
-            alert("Erro na Comnucação")
-        }
-    }
+    //         if (respostaSaude) {
+    //             const botResponse = {text: respostaSaude};
+    //             setOrientacoes(botResponse);
+    //           }
+    //     }catch{
+    //         alert("Erro na Comnucação")
+    //     }
+    // }
 
     return (
         <Modal
