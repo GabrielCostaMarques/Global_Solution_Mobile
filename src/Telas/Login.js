@@ -30,7 +30,6 @@ const Login = ({ navigation }) => {
       navigation.navigate("Chat");
     } catch (error) {
       onError(error.response.data ?? `Falha no login. Verifique suas credenciais!!`);
-      console.log(JSON.stringify(error.message));
     }
   };
 
@@ -39,13 +38,8 @@ const Login = ({ navigation }) => {
   };
 
   const handleSendEmail = () => {
-    // todo enviar o email
-    // console.log(`Enviando email para: ${email}`);
     onSucess(`Email enviado com Sucesso!`);
-
-    // limpa o campo do email do modal apos enviar o email
     setEmail("")
-    // fecha o modal
     toggleModal();
   };
 
