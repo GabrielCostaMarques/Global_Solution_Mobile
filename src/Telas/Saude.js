@@ -53,11 +53,11 @@ function Saude() {
         const listaNova = [];
         for (const chave in resposta.data) {
           const obj = { ...resposta.data[chave], id: chave };
-          obj.id = chave;
+          let id = resposta.data.map(x => x.id);
+          obj.id = id[0]
           listaNova.push(obj);
         }
         setLista(listaNova);
-        // console.log("resp",resposta.data);
       })
 
       .catch((err) => { alert("Erro ao ler a lista" + err) })
@@ -68,12 +68,13 @@ function Saude() {
   }
 
   const editarDados = async (item, novosDados) => {
+    novosDados['id'] = item.id
     try {
-      await api.put(`${API_URL}atualizacoes-saude-pub/${item.id}`, novosDados);    
+      await api.put(`${API_URL}dados-suple-usr/${item.id}`, novosDados);    
       onSucess("Dados editados com sucesso!");
       handleSalvarEdicao();
+      
     } catch (err) {
-    
     }
   };
 
@@ -84,7 +85,7 @@ function Saude() {
         atualizaLista();
       })
       .catch(() => {
-        alert("Erro ao apagar dado")
+        onError("Erro ao apagar dado")
       })
   }
 
@@ -132,14 +133,12 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
 
   const handleEdicao = () => { setEditar(!editar) }
 
-  const handleSalvarEdicao = () => {
-
-      setTimeout(() => {
+  const handleSalvarEdicao = () => {   
         
     editarItem(item, novosDados);
     setEditar(false);
     atualizaLista();
-      }, 3000);
+      
 
       
 
@@ -158,14 +157,14 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               style={styles.inputEdicao}
               placeholder={`Nome: ${item.nome}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, nome })
+                setNovosDados({ ...novosDados, nome:text })
               }
             />
             <TextInput
               style={styles.inputEdicao}
               placeholder={`Idade: ${item.idade}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, idade })
+                setNovosDados({ ...novosDados, idade:text })
               }
             />
             <TextInput
@@ -173,7 +172,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               style={styles.inputEdicao}
               placeholder={`Peso: ${item.peso}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, peso })
+                setNovosDados({ ...novosDados, peso:text })
               }
             />
             <TextInput
@@ -181,7 +180,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               style={styles.inputEdicao}
               placeholder={`Altura: ${item.altura}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, altura })
+                setNovosDados({ ...novosDados, altura:text })
               }
             />
             <TextInput
