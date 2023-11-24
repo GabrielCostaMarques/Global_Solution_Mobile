@@ -18,13 +18,18 @@ import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { onSucess, onError } from "../models/Toast";
 import { api, API_URL } from "../fetcher/api";
+import { Contexto } from '../components/contexto';
 
 
 const apiformsSaude = axios.create({ baseURL: "https://globalteste-5ed37-default-rtdb.firebaseio.com" })
 
 function Saude() {
 
-  const toggleModal = () => { setModalVisible(!modalVisible) }
+  const toggleModal = () => { 
+    
+    setModalVisible(!modalVisible) }
+
+
   const [modalVisible, setModalVisible] = useState(false)
   const [lista, setLista] = useState([])
 
@@ -58,7 +63,7 @@ function Saude() {
           listaNova.push(obj);
         }
         setLista(listaNova);
-          console.log(lista);
+        
       })
 
       .catch((err) => { alert("Erro ao ler a lista" + err) })
@@ -66,10 +71,20 @@ function Saude() {
 
   const atualizaLista = () => {
     getUserSaude()
+    console.log(lista);
   }
+
   const editarDados = (item, novosDados) => {
     apiformsSaude.put(`/dadosSaude/${item.id}.json`, novosDados)
-      .then(() => { alert("Dados editados com sucesso!") })
+    
+      .then(() => { 
+
+        setTimeout(() => {
+          
+          handleSalvarEdicao()
+        }, 5*1000);
+
+        alert("Dados editados com sucesso!") })
       .catch((err) => { alert("Erro ao editar os dados", err) })
   };
 
@@ -86,7 +101,7 @@ function Saude() {
 
   useEffect(() => {
     camapanhaSaudeAtual()
-    getUserSaude()
+    atualizaLista()
   }, [])
 
 
@@ -98,7 +113,7 @@ function Saude() {
         <TouchableOpacity onPress={toggleModal}>
           <Image source={IconAdd} style={styles.iconaddImg} />
         </TouchableOpacity>
-        <PopModal aberto={modalVisible} fechado={toggleModal} atualizaLista={atualizaLista} />
+        <PopModal aberto={modalVisible} fechado={toggleModal} atualizaLista={atualizaLista}/>
       </View>
       <View style={styles.blocoCampanha}>
         <Text style={styles.tituloBlocoCampanha}>{campanha.titulo}</Text>
@@ -208,6 +223,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             <Text style={styles.paragrafo}>Tempo de Sono: {item.tempoSono}</Text>
             <Text style={styles.paragrafoIMC}>IMC: {item.imc}</Text>
             <TouchableOpacity style={styles.iconEdita} onPress={handleEdicao}>
+              
               <AntDesign name='edit' size={40} />
             </TouchableOpacity>
             <TouchableOpacity
@@ -219,10 +235,6 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             >
               <AntDesign name='delete' size={40} />
             </TouchableOpacity>
-              <View>
-                <Text>Orientações: {item.orientacoes}</Text>
-              </View>
-
           </View>
         )}
       </View>

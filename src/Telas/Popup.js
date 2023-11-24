@@ -20,7 +20,6 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
     const [alimentacaoSaude, setAlimentacao]=useState("")
     const [tempoSono, setTempoSono]=useState("")
     const [imc, setImc]=useState(null)
-    const [orientacoes, setOrientacoes]=useState("")
     
 
     const objSaude={
@@ -40,32 +39,23 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
         .then(()=>{
             atualizaLista()
             fechado()
-            calcularIMC()
+            console.log("batata");
+
+            setTimeout(() => {
+                calcularIMC()
+            }, 5*1000);
+            
+            
         }).catch((err)=>{alert("Erro ao cadastrar"+err)})
     }
 
     const calcularIMC=()=> {
+        
         const alturaMetros = alturaSaude / 100;
         const imcTotal = pesoSaude / (alturaMetros * alturaMetros);
         setImc(imcTotal.toFixed(1));
         console.log(imcTotal.toFixed(2));
       }
-
-    // const orientacoesSaude= async()=>{
-    //     const userMessage = {text: objSaude};
-    //     setOrientacoes([...orientacoes,userMessage])
-
-    //     try{
-    //         const respostaSaude = await respostaApiGPTSaude(objSaude);
-
-    //         if (respostaSaude) {
-    //             const botResponse = {text: respostaSaude};
-    //             setOrientacoes(botResponse);
-    //           }
-    //     }catch{
-    //         alert("Erro na Comnucação")
-    //     }
-    // }
 
     return (
         <Modal
@@ -74,14 +64,16 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
             onBackdropPress={fechado}
             onBackButtonPress={fechado}
             animationType="slide"
-
+            calcularIMC={calcularIMC}
         >
+
             <ScrollView style={{ flex: 1 }}>
                     <TouchableOpacity style={styles.iconFechar} onPress={fechado}>
                     <Image source={IconFechar}  />
                     </TouchableOpacity>
                 
                 <View style={styles.container}>
+                    
                     <Text style={styles.titleForms}>Formulário de Saúde</Text>
                     <Text style={styles.subtitleForms}>Preencha com suas informações</Text>
                     <TextInput style={styles.inputForms} placeholder='Nome' value={nomeSaude} onChangeText={setNomeSaude}/>

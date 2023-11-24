@@ -8,6 +8,7 @@ listar:()=>{},
 salvar:(obj)=>{},
 cadastrarInfo:()=>{},
 carregarInfo:()=>{},
+calculaIMC:(altura,peso)=>{},
 listaSaude:[],
 lista:[],
 
