@@ -10,7 +10,7 @@ const Home = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.containerHome}>
         <Image style={styles.logo} source={IconHome} />
-        <Text style={styles.titulo}>NutriTech</Text>
+        <Text style={styles.titulo}>HealthHub</Text>
         <TypingAnimation
           style={styles.subtitulo}
           text="Para uma saúde ainda melhor"
