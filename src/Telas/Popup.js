@@ -49,7 +49,6 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
             onBackdropPress={fechado}
             onBackButtonPress={fechado}
             animationType="slide"
-            calcularIMC={calcularIMC}
         >
 
             <ScrollView style={{ flex: 1 }}>
