@@ -47,7 +47,7 @@ function Saude() {
       });
     } catch (error) {
       onError(`Falha ao carregar os dados`);
-      // console.log(error);
+      
     }
   }
 
@@ -79,7 +79,7 @@ function Saude() {
 
     try {
       await apiformsSaude.put(`/dadosSaude/${item.id}.json`, novosDados);
-      console.log("churros",novosDados);
+      
       alert("Dados editados com sucesso!");
       handleSalvarEdicao();
     } catch (err) {
@@ -149,7 +149,6 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
     editarItem(item, novosDados);
     setEditar(false);
     atualizaLista();
-    console.log("batata");
       }, 3000);
 
       
@@ -259,7 +258,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "#ee5e5e5"
+    backgroundColor: "#F5F8FF"
   },
 
   iconadd: {
@@ -296,7 +295,7 @@ const styles = StyleSheet.create({
 
   },
   item: {
-    backgroundColor: "#ef4023",
+    backgroundColor: "#0057FE",
     elevation: 8,
     padding: 20,
     paddingTop: 30,
@@ -322,7 +321,8 @@ const styles = StyleSheet.create({
   },
   paragrafo: {
     fontSize: 17,
-    padding: 5
+    padding: 5,
+    color:"white"
   },
   paragrafoNome: {
     fontSize: 25,
@@ -335,7 +335,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform:"uppercase",
     fontWeight:"bold",
-    padding:20
+    padding:20,
+    color:"white"
   },
 
   iconLixeira: {

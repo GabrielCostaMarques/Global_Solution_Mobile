@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, FlatList, DrawerLayoutAndroid } from "react-native";
 import { respostaApiGPT } from "../fetcher/apiGPT";
 import Menu from "../Telas/MenuProfile";
 
@@ -40,7 +40,7 @@ const App = ({navigation}) => {
       drawerWidth={300}
       drawerPosition="top"
       renderNavigationView={() => (
-        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View style={{ flex: 1, backgroundColor: "#F5F8FF" }}>
           <Menu/>
         </View>
       )}
@@ -59,10 +59,10 @@ const App = ({navigation}) => {
           data={messages}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <View style={{ alignSelf: item.isSent ? "flex-end" : "flex-start" }}>
+            <View style={{backgroundColor:"#F5F8FF", alignSelf: item.isSent ? "flex-end" : "flex-start" }}>
               <View
                 style={{
-                  backgroundColor: item.isSent ? "#4CAF50" : "#007AFF",
+                  backgroundColor: item.isSent ? "#4CAF50" : "#0057FE",
                   padding: 10,
                   borderRadius: 10,
                   margin: 5,
@@ -83,7 +83,7 @@ const App = ({navigation}) => {
             style={{
               flex: 1,
               borderWidth: 1,
-              borderColor: "#ccc",
+              borderColor: "#0057FE",
               borderRadius: 5,
               padding: 8,
             }}
@@ -94,7 +94,7 @@ const App = ({navigation}) => {
           <TouchableOpacity
             onPress={sendMessage}
             style={{
-              backgroundColor: "#007AFF",
+              backgroundColor: "#0057FE",
               padding: 8,
               borderRadius: 5,
               marginLeft: 8,

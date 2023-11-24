@@ -144,13 +144,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 50,
         paddingVertical: 20,
         marginTop: 30,
-        backgroundColor: "#2C6FD1",
-        borderRadius: 20
+        backgroundColor: "#0057FE",
+        borderRadius: 20,
+        
     },
 
     titleButtonForms: {
         fontSize: 24,
         fontWeight: "bold",
+        color:"#FFF"
 
     }
 

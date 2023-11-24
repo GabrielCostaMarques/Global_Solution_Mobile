@@ -126,17 +126,19 @@ const style = StyleSheet.create({
   title:{
     color:"black",
     fontSize:30,
-    fontWeight:"bold"
+    fontWeight:"bold",
+    textAlign:"center"
   },
 
   input: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
+    backgroundColor: "#F5F8FF",
+    borderRadius: 30,
     margin: 5,
     width: "100%",
     paddingVertical: 20,
     paddingHorizontal: 20,
     color: "black",
+    textAlign:"center"
   },
 
   titleInput: {
@@ -146,6 +148,7 @@ const style = StyleSheet.create({
     color: "black",
     marginTop: 20,
     marginBottom: 20,
+    textAlign:"center"
   },
 
   msgErro:{
@@ -157,13 +160,13 @@ const style = StyleSheet.create({
   btnCadastrar: {
     fontWeight: "bold" ,
     fontSize: 20,
-    backgroundColor: "#ef4023",
+    backgroundColor: "#0057FE",
     position: "relative",
     top: 60,
     paddingHorizontal: 40,
     paddingVertical: 10,
-    borderRadius: 10,
-    borderColor: "#fff",
+    borderRadius: 30,
+    borderColor: "#F5F8FF",
     borderWidth: 2,
   },
   btnText: {

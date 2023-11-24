@@ -121,7 +121,7 @@ export default Login;
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ef4023",
+    backgroundColor: "#0057FE",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -130,36 +130,39 @@ const style = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
     color: "white",
+    textAlign:"center"
   },
 
   titleInput: {
     fontSize: 20,
     fontWeight: "bold",
     letterSpacing: 2,
-    color: "#fff",
+    color: "#F5F8FF",
     marginTop: 20,
+    textAlign:"center"
   },
 
   input: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
+    backgroundColor: "#F5F8FF",
+    borderRadius: 30,
     margin: 5,
     width: 300,
     paddingVertical: 20,
     paddingHorizontal: 20,
     color: "black",
-    borderWidth:0.5
+    borderWidth:0.5,
+    textAlign:"center"
   },
 
   btnLogin: {
     fontSize: 30,
-    backgroundColor: "#ef4023",
+    backgroundColor: "#0057FE",
     position: "relative",
     top: 60,
     paddingHorizontal: 40,
     paddingVertical: 10,
-    borderRadius: 10,
-    borderColor: "#fff",
+    borderRadius: 30,
+    borderColor: "#Fff",
     borderWidth: 2,
   },
   btnText: {

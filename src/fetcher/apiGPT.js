@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY = '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';
+const API_KEY = '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';
 
 export const respostaApiGPT = async (mensagemUser) => {
   const apiChat = axios.create({
