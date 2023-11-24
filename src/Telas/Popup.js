@@ -3,19 +3,17 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, ScrollView 
 import Modal from 'react-native-modal';
 
 import IconFechar from '../../assets/iconRemove.png'
-import axios from 'axios';
+
 
 import { api, API_URL } from "../fetcher/api";
+import { onError } from '../models/Toast';
 
-import { respostaApiGPTSaude } from '../fetcher/apiGPT';
-
-const apiForms = axios.create({baseURL:"https://globalteste-5ed37-default-rtdb.firebaseio.com"})
 
 const PopModal = ({ aberto, fechado, atualizaLista }) => {
-    const [nomeSaude, setNomeSaude]=useState("")
-    const [idadeSaude, setIdadeSaude]=useState(null)
-    const [pesoSaude, setPesoSaude]=useState(null)
-    const [alturaSaude, setAltura]=useState("")
+    const [nome, setNomeSaude]=useState("")
+    const [idade, setIdadeSaude]=useState(null)
+    const [peso, setPesoSaude]=useState(null)
+    const [altura, setAltura]=useState("")
     const [habitosSaude, setHabitos]=useState("")
     const [alimentacaoSaude, setAlimentacao]=useState("")
     const [tempoSono, setTempoSono]=useState("")
@@ -23,10 +21,10 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
     
 
     const objSaude={
-        nomeSaude,
-        idadeSaude,
-        pesoSaude,
-        alturaSaude,
+        nome,
+        idade,
+        peso,
+        altura,
         habitosSaude,
         alimentacaoSaude,
         tempoSono,
@@ -34,28 +32,15 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
         }
 
     const cadastrarInfo =()=>{
-        apiForms
-        .post("/dadosSaude.json",objSaude)
+        api
+        .post(`${API_URL}dados-suple-usr`,objSaude)
         .then(()=>{
             atualizaLista()
             fechado()
-            console.log("batata");
-
-            setTimeout(() => {
-                calcularIMC()
-            }, 5*1000);
-            
-            
-        }).catch((err)=>{alert("Erro ao cadastrar"+err)})
+            // console.log("envio",objSaude,"\n");
+        }).catch((err)=>{onError("Erro ao cadastrar"+err)})
     }
 
-    const calcularIMC=()=> {
-        
-        const alturaMetros = alturaSaude / 100;
-        const imcTotal = pesoSaude / (alturaMetros * alturaMetros);
-        setImc(imcTotal.toFixed(1));
-        console.log(imcTotal.toFixed(2));
-      }
 
     return (
         <Modal
@@ -76,10 +61,10 @@ const PopModal = ({ aberto, fechado, atualizaLista }) => {
                     
                     <Text style={styles.titleForms}>Formulário de Saúde</Text>
                     <Text style={styles.subtitleForms}>Preencha com suas informações</Text>
-                    <TextInput style={styles.inputForms} placeholder='Nome' value={nomeSaude} onChangeText={setNomeSaude}/>
-                    <TextInput style={styles.inputForms} placeholder='Idade' value={idadeSaude} onChangeText={setIdadeSaude}/>
-                    <TextInput style={styles.inputForms} placeholder='Peso' value={pesoSaude} onChangeText={setPesoSaude}/>
-                    <TextInput style={styles.inputForms} placeholder='Altura' value={alturaSaude} onChangeText={setAltura}/>
+                    <TextInput style={styles.inputForms} placeholder='Nome' value={nome} onChangeText={setNomeSaude}/>
+                    <TextInput style={styles.inputForms} placeholder='Idade' value={idade} onChangeText={setIdadeSaude}/>
+                    <TextInput style={styles.inputForms} placeholder='Peso' value={peso} onChangeText={setPesoSaude}/>
+                    <TextInput style={styles.inputForms} placeholder='Altura' value={altura} onChangeText={setAltura}/>
                     <TextInput style={styles.inputForms} placeholder='Hábitos - descreva no máximo 3' value={habitosSaude} onChangeText={setHabitos}/>
                     <TextInput style={styles.inputForms} placeholder='Alimentação - descreva no máximo 3' value={alimentacaoSaude} onChangeText={setAlimentacao}/>
                     <TextInput style={styles.inputForms} placeholder='Tempo de Sono - apenas número' value={tempoSono} onChangeText={setTempoSono}/>
