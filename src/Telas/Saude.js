@@ -29,7 +29,7 @@ function Saude() {
     dtInfoSaude: "",
   });
 
-  const camapanhaSaudeAtual = () => {
+  const camapanhaSaudeAtual = () => { 
     try {
       api.get(`${API_URL}atualizacoes-saude-pub`).then((resp) => {
         onSucess(`Campanha atual carregada!`);
