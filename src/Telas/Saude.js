@@ -10,18 +10,13 @@ import {
 } from 'react-native';
 
 
-
-
 import PopModal from './Popup'
 import IconAdd from '../../assets/iconadd.png'
-import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 import { onSucess, onError } from "../models/Toast";
 import { api, API_URL } from "../fetcher/api";
-import { Contexto } from '../components/contexto';
 
 
-const apiformsSaude = axios.create({ baseURL: "https://globalteste-5ed37-default-rtdb.firebaseio.com" })
 
 function Saude() {
 
@@ -53,8 +48,7 @@ function Saude() {
 
 
   const getUserSaude = () => {
-    apiformsSaude.get("/dadosSaude.json")
-
+    api.get(`${API_URL}dados-suple-usr`)
       .then((resposta) => {
         const listaNova = [];
         for (const chave in resposta.data) {
@@ -63,7 +57,7 @@ function Saude() {
           listaNova.push(obj);
         }
         setLista(listaNova);
-        
+        // console.log("resp",resposta.data);
       })
 
       .catch((err) => { alert("Erro ao ler a lista" + err) })
@@ -71,25 +65,21 @@ function Saude() {
 
   const atualizaLista = () => {
     getUserSaude()
-  
   }
 
   const editarDados = async (item, novosDados) => {
-    novosDados['imc'] = parseFloat(novosDados.pesoSaude) / ((parseFloat(novosDados.alturaSaude)/100) * (parseFloat(novosDados.alturaSaude)/100))
-
     try {
-      await apiformsSaude.put(`/dadosSaude/${item.id}.json`, novosDados);
-      
-      alert("Dados editados com sucesso!");
+      await api.put(`${API_URL}atualizacoes-saude-pub/${item.id}`, novosDados);    
+      onSucess("Dados editados com sucesso!");
       handleSalvarEdicao();
     } catch (err) {
-     
-    }
+    
+    }
   };
 
 
   const apagar = (obj) => {
-    apiformsSaude.delete("/dadosSaude/" + obj.id + ".json")
+    api.delete(`${API_URL}atualizacoes-saude-pub/${obj.id}`)
       .then(() => {
         atualizaLista();
       })
@@ -115,8 +105,8 @@ function Saude() {
         <PopModal aberto={modalVisible} fechado={toggleModal} atualizaLista={atualizaLista}/>
       </View>
       <View style={styles.blocoCampanha}>
-        <Text style={styles.tituloBlocoCampanha}>{campanha.titulo}</Text>
-        <Text style={styles.textoBlocoCampanha}>{campanha.descricao}</Text>
+        <Text style={styles.tituloBlocoCampanha}>{campanha.titulo + '\n'}</Text>
+        <Text style={styles.textoBlocoCampanha}>{campanha.descricao + '\n'}</Text>
         <Text style={styles.textoBlocoCampanha}>Data Inicio Campanha: {campanha.dtInfoSaude}</Text>
       </View>
 
@@ -166,32 +156,32 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
           <View style={{ flex: 1, height: "100%" }}>
             <TextInput
               style={styles.inputEdicao}
-              placeholder={`Nome: ${item.nomeSaude}`}
+              placeholder={`Nome: ${item.nome}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, nomeSaude: text })
+                setNovosDados({ ...novosDados, nome })
               }
             />
             <TextInput
               style={styles.inputEdicao}
-              placeholder={`Idade: ${item.idadeSaude}`}
+              placeholder={`Idade: ${item.idade}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, idadeSaude: text })
+                setNovosDados({ ...novosDados, idade })
               }
             />
             <TextInput
            keyboardType='numeric'
               style={styles.inputEdicao}
-              placeholder={`Peso: ${item.pesoSaude}`}
+              placeholder={`Peso: ${item.peso}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, pesoSaude: text })
+                setNovosDados({ ...novosDados, peso })
               }
             />
             <TextInput
             keyboardType='numeric'
               style={styles.inputEdicao}
-              placeholder={`Altura: ${item.alturaSaude}`}
+              placeholder={`Altura: ${item.altura}`}
               onChangeText={(text) =>
-                setNovosDados({ ...novosDados, alturaSaude: text })
+                setNovosDados({ ...novosDados, altura })
               }
             />
             <TextInput
@@ -222,15 +212,14 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
           </View>
         ) : (
           <View style={{ flex: 1 }}>
-            <View style={styles.tagNome}><Text style={styles.paragrafoNome}>{item.nomeSaude}</Text></View>
-
-            <Text style={styles.paragrafo}>Idade: {item.idadeSaude}</Text>
-            <Text style={styles.paragrafo}>Peso: {item.pesoSaude}</Text>
-            <Text style={styles.paragrafo}>Altura: {item.alturaSaude}</Text>
+            <View style={styles.tagNome}><Text style={styles.paragrafoNome}>{item.nome}</Text></View>
+            <Text style={styles.paragrafo}>Idade: {item.idade}</Text>
+            <Text style={styles.paragrafo}>Peso: {item.peso}</Text>
+            <Text style={styles.paragrafo}>Altura: {item.altura}</Text>
             <Text style={styles.paragrafo}>Hábitos: {item.habitosSaude}</Text>
             <Text style={styles.paragrafo}>Alimentação: {item.alimentacaoSaude}</Text>
             <Text style={styles.paragrafo}>Tempo de Sono: {item.tempoSono}</Text>
-            <Text style={styles.paragrafoIMC}>IMC: {Number(item.imc).toFixed(1)}</Text>
+            <Text style={styles.paragrafoIMC}>IMC: {item.imc.toFixed(1)}</Text>
             <TouchableOpacity style={styles.iconEdita} onPress={handleEdicao}>
               
               <AntDesign name='edit' size={40} />
