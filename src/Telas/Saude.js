@@ -73,9 +73,11 @@ function Saude() {
   };
 
   const apagar = (obj) => {
+
     api
-      .delete(`${API_URL}atualizacoes-saude-pub/${obj.id}`)
+      .delete(`${API_URL}dados-suple-usr/${obj.id}`)
       .then(() => {
+        onSucess("Dados Removidos")
         atualizaLista();
       })
       .catch(() => {
