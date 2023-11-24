@@ -41,9 +41,9 @@ export default function App({ navigation }) {
             <Stack.Screen name="Cadastrar" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} /> 
             <Stack.Screen name="Chat" component={ChatScreen} />
+            <Stack.Screen name="Menu" component={Menu} />
             <Stack.Screen name="Saude" component={SaudeScreen}/>
             <Stack.Screen name="Popup" component={PopModal}/>
-            <Stack.Screen name="Menu" component={Menu} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

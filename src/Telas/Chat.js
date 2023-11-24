@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList, DrawerLayoutAndroid } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, FlatList } from "react-native";
 import { respostaApiGPT } from "../fetcher/apiGPT";
 import Menu from "../Telas/MenuProfile";
 
@@ -25,26 +25,20 @@ const App = ({navigation}) => {
       console.error("Erro na chamada da API GPT-3:", error);
     }
   };
-
-  const openDrawer = () => {
-    drawerRef.current.openDrawer();
-  };
   const goToSaude = () => {
     navigation.navigate("Saude");
   };
+  const gotoMenu = () => {
+    navigation.navigate("Menu");
+  };
 
   return (
-    <DrawerLayoutAndroid
-      ref={drawerRef}
-      drawerLockMode='locked-closed'
-      drawerWidth={300}
-      drawerPosition="top"
-      renderNavigationView={() => (
-        <View style={{ flex: 1, backgroundColor: "#F5F8FF" }}>
+
+    <View>        <View style={{ flex: 1, backgroundColor: "#F5F8FF" }}>
           <Menu/>
         </View>
-      )}
-    >
+      
+    
       <View style={{ flex: 1 }}>
       <View style={{ flex: 1 ,flexDirection:"row",justifyContent:"space-between"}}>
         <TouchableOpacity onPress={openDrawer}>
@@ -103,8 +97,9 @@ const App = ({navigation}) => {
             <Text style={{ color: "white" }}>Enviar</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </DrawerLayoutAndroid>
+      </View></View>
+    
+
   );
 };
 
