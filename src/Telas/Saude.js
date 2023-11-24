@@ -71,21 +71,20 @@ function Saude() {
 
   const atualizaLista = () => {
     getUserSaude()
-    console.log(lista);
+  
   }
 
-  const editarDados = (item, novosDados) => {
-    apiformsSaude.put(`/dadosSaude/${item.id}.json`, novosDados)
-    
-      .then(() => { 
+  const editarDados = async (item, novosDados) => {
+    novosDados['imc'] = parseFloat(novosDados.pesoSaude) / ((parseFloat(novosDados.alturaSaude)/100) * (parseFloat(novosDados.alturaSaude)/100))
 
-        setTimeout(() => {
-          
-          handleSalvarEdicao()
-        }, 5*1000);
-
-        alert("Dados editados com sucesso!") })
-      .catch((err) => { alert("Erro ao editar os dados", err) })
+    try {
+      await apiformsSaude.put(`/dadosSaude/${item.id}.json`, novosDados);
+      console.log("churros",novosDados);
+      alert("Dados editados com sucesso!");
+      handleSalvarEdicao();
+    } catch (err) {
+     
+    }
   };
 
 
@@ -144,9 +143,17 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
   const handleEdicao = () => { setEditar(!editar) }
 
   const handleSalvarEdicao = () => {
+
+      setTimeout(() => {
+        
     editarItem(item, novosDados);
     setEditar(false);
     atualizaLista();
+    console.log("batata");
+      }, 3000);
+
+      
+
   };
 
 
@@ -173,6 +180,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               }
             />
             <TextInput
+           keyboardType='numeric'
               style={styles.inputEdicao}
               placeholder={`Peso: ${item.pesoSaude}`}
               onChangeText={(text) =>
@@ -180,6 +188,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               }
             />
             <TextInput
+            keyboardType='numeric'
               style={styles.inputEdicao}
               placeholder={`Altura: ${item.alturaSaude}`}
               onChangeText={(text) =>
@@ -187,6 +196,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
               }
             />
             <TextInput
+              
               style={styles.inputEdicao}
               placeholder={`Hábitos: ${item.habitosSaude}`}
               onChangeText={(text) =>
@@ -221,7 +231,7 @@ const Item = ({ item, apagarItem, editarItem, atualizaLista }) => {
             <Text style={styles.paragrafo}>Hábitos: {item.habitosSaude}</Text>
             <Text style={styles.paragrafo}>Alimentação: {item.alimentacaoSaude}</Text>
             <Text style={styles.paragrafo}>Tempo de Sono: {item.tempoSono}</Text>
-            <Text style={styles.paragrafoIMC}>IMC: {item.imc}</Text>
+            <Text style={styles.paragrafoIMC}>IMC: {Number(item.imc).toFixed(1)}</Text>
             <TouchableOpacity style={styles.iconEdita} onPress={handleEdicao}>
               
               <AntDesign name='edit' size={40} />
