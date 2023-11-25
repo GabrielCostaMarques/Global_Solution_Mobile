@@ -24,4 +24,12 @@
 * Compromisso em promover um estilo de vida saudável e consciente.
 * Viva melhor, sinta-se melhor, seja melhor. Bem-vindo ao HealthHub, onde sua saúde está no centro de tudo que fazemos.
 
+  ### versão bibliotecas:
+- node 18.18.2
+- npm 9.8.1
+- axios 1.5.1
+- react 18.2.0
+
 - Extra [Link do video da aplicação Mobile](https://drive.google.com/file/d/1CzgH3VgIX1sij66K4sAc7_AglflAehjG/view)
+- [Link do repositorio da api Java consumida na aplicação](https://github.com/OdMatheuS/digital-business-api)
+- Obs: se for utilizar local a API, utilizar a branch **dev-local-global**
